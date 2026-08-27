@@ -45,10 +45,10 @@ package body Risch_Algorithm is
       return new Expression_Node'(Kind => Div, Left => L, Right => R);
    end "/";
 
-   function "^" (L, R : Expression) return Expression is
+   function "**" (L, R : Expression) return Expression is
    begin
       return new Expression_Node'(Kind => Pow, Left => L, Right => R);
-   end "^";
+   end "**";
 
    -- Helper: Equality
    function Is_Equal (L, R : Expression) return Boolean is
@@ -83,10 +83,10 @@ package body Risch_Algorithm is
             return (Derive(E.Left, X) * E.Right) + (E.Left * Derive(E.Right, X));
          when Div => 
             -- Quotient rule: (u'v - uv') / v^2
-            return ((Derive(E.Left, X) * E.Right) - (E.Left * Derive(E.Right, X))) / (E.Right ^ Create_Val(2.0));
+            return ((Derive(E.Left, X) * E.Right) - (E.Left * Derive(E.Right, X))) / (E.Right ** Create_Val(2.0));
          when Pow => 
             -- Simplified power rule for constant exponents
-            return (E.Right * (E.Left ^ Create_Val(E.Right.Value - 1.0))) * Derive(E.Left, X);
+            return (E.Right * (E.Left ** Create_Val(E.Right.Value - 1.0))) * Derive(E.Left, X);
          when Exp_Func =>
             -- Chain rule for exp: e^u * u'
             return Create_Exp(E.Operand) * Derive(E.Operand, X);
@@ -156,7 +156,7 @@ package body Risch_Algorithm is
             return E * Create_Var(X);
          when Var => 
             if E.Name = X then 
-               return (E ^ Create_Val(2.0)) / Create_Val(2.0);
+               return (E ** Create_Val(2.0)) / Create_Val(2.0);
             else 
                return E * Create_Var(X);
             end if;
