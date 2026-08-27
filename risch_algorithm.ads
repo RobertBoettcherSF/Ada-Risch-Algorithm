@@ -37,7 +37,7 @@ package Risch_Algorithm is
    function "-" (L, R : Expression) return Expression;
    function "*" (L, R : Expression) return Expression;
    function "/" (L, R : Expression) return Expression;
-   function "^" (L, R : Expression) return Expression;
+   function "**" (L, R : Expression) return Expression; -- Fixed: Ada uses ** for exponentiation
 
    -- Core Risch Algorithm Variants and Sub-algorithms
    
