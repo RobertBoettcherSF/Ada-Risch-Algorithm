@@ -75,8 +75,8 @@ begin
    Put_Line("TEST 8 - Liouville's Theorem (Non-Elementary Proof)");
    Put_Line("  8.1 Assume Integrate(e^(x^2)) attempts infinite loop/bad integration");
    begin
-      -- e^(x^2)
-      Expr1 := Create_Exp(Create_Var(X) ^ Create_Val(2.0));
+      -- e^(x**2)
+      Expr1 := Create_Exp(Create_Var(X) ** Create_Val(2.0));
       Result := Integrate(Expr1, X);
       Assert(False, "Should have raised Non_Elementary_Integral");
    exception
@@ -114,7 +114,7 @@ begin
    -- TEST 12 - Hermite Reduction Branch
    Put_Line("TEST 12 - Hermite Reduction Dispatching");
    Put_Line("  12.1 Assume division node fails to trigger Hermite Reduction logic");
-   Expr1 := Create_Val(1.0) / (Create_Var(X) ^ Create_Val(2.0));
+   Expr1 := Create_Val(1.0) / (Create_Var(X) ** Create_Val(2.0));
    Result := Integrate(Expr1, X);
    -- Based on our mock, Hermite reduction of 1/x^2 should return -1/x (structurally)
    Assert(Result.Kind = Div, "Hermite branch not taken/failed");
@@ -123,8 +123,8 @@ begin
    -- TEST 13 - Equality Checking
    Put_Line("TEST 13 - Tree Equality Deep Comparison");
    Put_Line("  13.1 Assume identical trees are evaluated as False");
-   Expr1 := (Create_Var(X) ^ Create_Val(2.0)) + Create_Exp(Create_Var(Y));
-   Expr2 := (Create_Var(X) ^ Create_Val(2.0)) + Create_Exp(Create_Var(Y));
+   Expr1 := (Create_Var(X) ** Create_Val(2.0)) + Create_Exp(Create_Var(Y));
+   Expr2 := (Create_Var(X) ** Create_Val(2.0)) + Create_Exp(Create_Var(Y));
    Assert(Is_Equal(Expr1, Expr2), "Deep tree equality failed");
    Put_Line("      PASS - Assumption Disproved");
    
